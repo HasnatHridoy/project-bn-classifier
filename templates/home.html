@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>NEURAL NEWS - AI News Classifier</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#410002",
+                        "on-primary-fixed-variant": "#e2e2e2",
+                        "on-primary": "#e2e2e2",
+                        "surface": "#f9f9f9",
+                        "primary": "#000000",
+                        "primary-fixed-dim": "#474747",
+                        "on-surface": "#1b1b1b",
+                        "on-primary-container": "#ffffff",
+                        "secondary": "#5e5e5e",
+                        "secondary-fixed-dim": "#ababab",
+                        "on-secondary-fixed": "#1b1b1b",
+                        "surface-variant": "#e2e2e2",
+                        "inverse-primary": "#c6c6c6",
+                        "error": "#ba1a1a",
+                        "surface-container": "#eeeeee",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-container-low": "#f3f3f3",
+                        "inverse-surface": "#303030",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#3b3b3b",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#ffffff",
+                        "primary-container": "#3b3b3b",
+                        "tertiary-container": "#747474",
+                        "outline-variant": "#c6c6c6",
+                        "on-tertiary-fixed-variant": "#e2e2e2",
+                        "secondary-fixed": "#c6c6c6",
+                        "tertiary-fixed-dim": "#474747",
+                        "on-surface-variant": "#474747",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#d4d4d4",
+                        "surface-container-highest": "#e2e2e2",
+                        "surface-container-high": "#e8e8e8",
+                        "on-background": "#1b1b1b",
+                        "on-tertiary-fixed": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#5e5e5e",
+                        "surface-dim": "#dadada",
+                        "background": "#f9f9f9",
+                        "outline": "#777777",
+                        "surface-bright": "#f9f9f9",
+                        "on-primary-fixed": "#ffffff",
+                        "tertiary": "#3b3b3b",
+                        "on-tertiary": "#e2e2e2",
+                        "primary-fixed": "#5e5e5e",
+                        "surface-tint": "#5e5e5e",
+                        "on-secondary-container": "#1b1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {},
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .shadow-ambient {
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface antialiased">
+    <!-- TopNavBar -->
+    <nav class="sticky top-0 w-full z-50 bg-[#f9f9f9] dark:bg-[#000000] font-manrope antialiased tracking-tight">
+        <div class="flex justify-between items-center h-20 px-8 max-w-[90rem] mx-auto">
+            <!-- Logo -->
+            <a class="text-xl font-bold tracking-tighter text-[#000000] dark:text-[#ffffff]" href="#">
+                NEURAL NEWS
+            </a>
+            <!-- Links (Desktop) -->
+            <div class="hidden md:flex space-x-8 items-center" id="nav-container">
+                <a id="nav-classifier" onclick="setActiveLink('nav-classifier')"
+                    class="nav-link text-[#000000] dark:text-[#ffffff] font-bold border-b-2 border-[#000000] dark:border-[#ffffff] pb-1 hover:text-[#000000] dark:hover:text-[#ffffff] transition-all duration-300 scale-95 active:scale-90"
+                    href="#classifier">Classifier</a>
+                <a id="nav-about" onclick="setActiveLink('nav-about')"
+                    class="nav-link text-[#1b1b1b]/60 dark:text-[#f9f9f9]/60 hover:text-[#000000] dark:hover:text-[#ffffff] transition-all duration-300 scale-95 active:scale-90"
+                    href="#about">About</a>
+            </div>
+            <!-- Primary Action -->
+            <button aria-label="GitHub"
+                class="hidden md:flex items-center justify-center w-12 h-12 bg-primary text-on-primary rounded-full font-bold text-sm tracking-wide scale-95 active:scale-90 transition-transform bg-gradient-to-b from-primary to-primary-container">
+                <svg class="w-6 h-6 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12">
+                    </path>
+                </svg>
+            </button>
+            <!-- Mobile Menu Icon (Placeholder) -->
+            <button class="md:hidden text-primary">
+                <span class="material-symbols-outlined text-2xl">menu</span>
+            </button>
+        </div>
+        <div class="w-full h-[1px] bg-[#f3f3f3] dark:bg-[#1b1b1b]"></div>
+    </nav>
+    <main>
+        <!-- Hero / Classifier Section -->
+        <section class="max-w-[90rem] mx-auto px-8 py-24 md:py-32 flex flex-col xl:flex-row gap-12 items-start"
+            id="classifier">
+            <div class="w-full xl:w-1/3 space-y-8 pt-4">
+                <h1 class="text-[3.5rem] font-bold leading-tight tracking-tight text-primary"><span
+                        class="relative inline-block">Label<svg class="absolute -bottom-2 left-0 w-full h-3"
+                            preserveaspectratio="none" viewbox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 15 Q 25 12, 50 15 T 98 14" fill="transparent" stroke="black"
+                                stroke-linecap="round" stroke-width="4"></path>
+                        </svg></span> the news with surgical precision.</h1>
+                <p class="text-lg text-on-surface-variant leading-relaxed">Quickly analyze <b>Bangla News content</b>
+                    with our <b>intelligent classifier</b>, turning vast amounts of information into actionable
+                    insights.</p>
+            </div>
+            <!-- Classifier Area -->
+            <div class="w-full xl:w-2/3 flex flex-col lg:flex-row gap-8">
+                <!-- Input Area -->
+                <div class="w-full lg:w-3/5 bg-surface-container-lowest rounded-lg p-6 shadow-ambient">
+                    <textarea id="newsInput"
+                        class="w-full h-[26rem] p-6 bg-surface-container-highest border-0 focus:ring-1 focus:ring-primary focus:ring-opacity-40 rounded-lg text-body-lg resize-none placeholder-on-surface-variant transition-shadow"
+                        placeholder="Paste article text here..."></textarea>
+                    <div class="mt-6 flex justify-end">
+                        <button id="classifyBtn" onclick="handleButtonClick()"
+                            class="px-8 py-4 bg-primary text-on-primary rounded-full font-bold text-sm tracking-wide bg-gradient-to-b from-primary to-primary-container hover:opacity-90 transition-opacity">
+                            Classify Article
+                        </button>
+                    </div>
+                </div>
+                <!-- Results Dashboard -->
+                <div class="w-full lg:w-2/5 flex flex-col gap-6">
+                    <div class="bg-surface-container-lowest rounded-lg p-8 shadow-ambient flex-1">
+                        <h3 class="text-xl font-medium mb-6 flex items-center gap-2">
+                            <span class="material-symbols-outlined">analytics</span>
+                            Results
+                        </h3>
+                        <!-- Placeholder Results -->
+
+                        <div
+                            class="mt-8 pt-8 border-t border-outline-variant/20 flex flex-col items-center justify-center text-center">
+                            <span class="material-symbols-outlined text-4xl text-outline mb-2">hourglass_empty</span>
+                            <p class="text-sm text-on-surface-variant">Awaiting input for analysis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Project Features (Moved) -->
+        <section class="max-w-[90rem] mx-auto px-8 mb-32">
+            <h2 class="text-[2.5rem] font-bold tracking-tight text-primary mb-6">Comes with handy features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3">
+                <div class="p-12 md:p-16 group hover:bg-primary transition-colors duration-300">
+                    <div class="mb-8">
+                        <span
+                            class="material-symbols-outlined text-4xl text-primary group-hover:text-on-primary">api</span>
+                    </div>
+                    <h3
+                        class="text-xl font-bold tracking-tight text-primary group-hover:text-on-primary uppercase mb-2">
+                        API Available</h3>
+                    <p class="text-on-surface-variant group-hover:text-on-primary/70">Integrate our classification
+                        engine into your existing news workflows seamlessly.</p>
+                </div>
+                <div class="p-12 md:p-16 group hover:bg-primary transition-colors duration-300">
+                    <div class="mb-8">
+                        <span
+                            class="material-symbols-outlined text-4xl text-primary group-hover:text-on-primary">bolt</span>
+                    </div>
+                    <h3
+                        class="text-xl font-bold tracking-tight text-primary group-hover:text-on-primary uppercase mb-2">
+                        Blazing Fast</h3>
+                    <p class="text-on-surface-variant group-hover:text-on-primary/70">Optimized inference pipelines
+                        deliver sub-second results for any article size.</p>
+                </div>
+                <div class="p-12 md:p-16 group hover:bg-primary transition-colors duration-300">
+                    <div class="mb-8">
+                        <span
+                            class="material-symbols-outlined text-4xl text-primary group-hover:text-on-primary">public</span>
+                    </div>
+                    <h3
+                        class="text-xl font-bold tracking-tight text-primary group-hover:text-on-primary uppercase mb-2">
+                        Totally Open Source</h3>
+                    <p class="text-on-surface-variant group-hover:text-on-primary/70">Built for the community.
+                        Transparency in architecture and data handling is our core.</p>
+                </div>
+            </div>
+        </section>
+        <!-- About Section -->
+        <section class="max-w-[90rem] mx-auto px-8 pb-32" id="about">
+            <div class="flex flex-col md:flex-row gap-16 items-start">
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-[2.5rem] font-bold tracking-tight text-primary mb-6">The Mission</h2>
+                    <p class="text-xl text-on-surface-variant leading-relaxed max-w-xl">
+                        We built Neural News to strip away the noise. In an era of endless scrolling and algorithmic
+                        bias, we provide a deterministic, transparent tool to categorize and understand information at
+                        scale.
+                    </p>
+                </div>
+                <div class="w-full md:w-1/2 flex items-center justify-end gap-6 h-full pt-4">
+                    <button
+                        class="px-8 py-4 bg-surface-container-highest text-primary rounded-none border border-primary font-bold text-sm tracking-widest uppercase hover:bg-primary hover:text-on-primary transition-all flex items-center gap-2">
+                        View Documentation
+                    </button>
+                    <button
+                        class="px-8 py-4 bg-primary text-on-primary rounded-none font-bold text-sm tracking-widest uppercase hover:opacity-90 transition-opacity flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">code</span>
+                        Source Code
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-[#000000] dark:bg-[#000000] w-full">
+        <div
+            class="flex flex-col md:flex-row justify-between items-center py-16 px-8 max-w-[90rem] mx-auto space-y-8 md:space-y-0">
+            <p class="font-manrope text-[0.6875rem] font-bold uppercase tracking-[0.2em] text-white">
+                © 2024 NEURAL NEWS CLASSIFIER. BUILT WITH STARK HUMANISM.
+            </p>
+            <div class="flex space-x-12 font-manrope text-[0.6875rem] font-bold uppercase tracking-[0.2em]">
+                <a class="text-neutral-400 hover:text-white transition-colors" href="#">Documentation</a>
+                <a class="text-neutral-400 hover:text-white transition-colors" href="#">Source Code</a>
+                <a class="text-neutral-400 hover:text-white transition-colors" href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+
+        function setActiveLink(activeId) {
+            // Define the classes for Active vs Inactive states
+            const activeClasses = ["text-[#000000]", "dark:text-[#ffffff]", "font-bold", "border-b-2", "border-[#000000]", "dark:border-[#ffffff]", "pb-1"];
+            const inactiveClasses = ["text-[#1b1b1b]/60", "dark:text-[#f9f9f9]/60"];
+
+            // Get all navigation links
+            const links = document.querySelectorAll('.nav-link');
+
+            links.forEach(link => {
+                if (link.id === activeId) {
+                    // Apply Active Styles
+                    link.classList.add(...activeClasses);
+                    link.classList.remove(...inactiveClasses);
+                } else {
+                    // Apply Inactive Styles
+                    link.classList.remove(...activeClasses);
+                    link.classList.add(...inactiveClasses);
+                }
+            });
+        }
+
+        // This part detects which section is on screen and updates the underline automatically
+        const observerOptions = {
+            root: null,
+            threshold: 0.6 // Adjust this to trigger sooner/later
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    setActiveLink(`nav-${id}`);
+                }
+            });
+        }, observerOptions);
+
+        // Start observing the sections
+        document.addEventListener('DOMContentLoaded', () => {
+            observer.observe(document.getElementById('classifier'));
+            observer.observe(document.getElementById('about'));
+        });
+        // Store the initial state of the dashboard to restore it later
+        let initialDashboardHTML = "";
+
+        window.onload = () => {
+            initialDashboardHTML = document.querySelector('.bg-surface-container-lowest.rounded-lg.p-8').innerHTML;
+        };
+
+        async function handleButtonClick() {
+            const btn = document.getElementById('classifyBtn');
+            const textArea = document.getElementById('newsInput');
+
+            // IF THE BUTTON IS IN "CLEAR" MODE
+            if (btn.innerText === "Clear Input") {
+                textArea.value = "";
+                const dashboard = document.querySelector('.bg-surface-container-lowest.rounded-lg.p-8');
+                dashboard.innerHTML = initialDashboardHTML;
+
+                // Reset button to original "Classify" style
+                btn.innerText = "Classify Article";
+                btn.className = "px-8 py-4 bg-primary text-on-primary rounded-full font-bold text-sm tracking-wide bg-gradient-to-b from-primary to-primary-container hover:opacity-90 transition-opacity";
+                return;
+            }
+
+            // IF THE BUTTON IS IN "CLASSIFY" MODE
+            const textInput = textArea.value;
+            const dashboard = document.querySelector('.bg-surface-container-lowest.rounded-lg.p-8');
+
+            if (!textInput.trim()) {
+                alert("Please paste some text first!");
+                return;
+            }
+
+            // Show loading state
+            dashboard.innerHTML = `
+        <div class="flex flex-col items-center justify-center h-64 animate-pulse">
+            <span class="material-symbols-outlined text-4xl mb-4">sync</span>
+            <p class="text-sm font-bold tracking-widest uppercase">Analyzing Content...</p>
+        </div>`;
+
+            try {
+                const response = await fetch('/api/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: textInput })
+                });
+
+                const data = await response.json();
+
+                dashboard.innerHTML = `
+            <h3 class="text-xl font-medium mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined">analytics</span>
+                Results Dashboard
+            </h3>
+            <div id="resultsList" class="space-y-6"></div>
+        `;
+
+                const resultsList = document.getElementById('resultsList');
+
+                data.confidences.forEach(item => {
+                    const percentage = (item.confidence * 100).toFixed(1);
+                    const resultItem = document.createElement('div');
+                    resultItem.innerHTML = `
+                <div class="flex justify-between items-end mb-2">
+                    <span class="px-4 py-1.5 bg-surface-container-high rounded-full text-sm font-bold">${item.label}</span>
+                    <span class="text-sm font-bold">${percentage}%</span>
+                </div>
+                <div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+                    <div class="h-full bg-primary transition-all duration-1000" style="width: ${percentage}%"></div>
+                </div>
+            `;
+                    resultsList.appendChild(resultItem);
+                });
+
+                // SUCCESS: Change button to "Clear Input" with outlined style
+                btn.innerText = "Clear Input";
+                btn.className = "px-8 py-4 bg-transparent text-primary border-2 border-primary rounded-full font-bold text-sm tracking-wide hover:bg-primary/5 transition-colors";
+
+            } catch (error) {
+                console.error("Error:", error);
+                dashboard.innerHTML = `<p class="text-error">Failed to analyze news. Check server connection.</p>`;
+            }
+        }
+    </script>
+</body>
+
+</html>
