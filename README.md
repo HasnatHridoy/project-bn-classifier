@@ -49,15 +49,23 @@ We conducted extensive experiments on Kaggle to find the most efficient model fo
 
 -----
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
+├── notebooks/
+│   ├── 01_link_scraper.ipynb            # Discovering article URLs
+│   ├── 02_news_scraping.ipynb           # Extracting full text from links
+│   ├── 03_data_cleaning.ipynb           # Preprocessing & noise removal
+│   ├── 04_dataset_creation.ipynb        # Finalizing the 47k article pool
+│   ├── 05_data_annotation_gemma.ipynb   # Synthetic labeling with Gemma 3 27B
+│   ├── 06_bert_model_training.ipynb     # Bangla BERT training (deployed)
+│   ├── 07_bangla_t5_training.ipynb      # T5 benchmarking
+│   └── 08_gemma_3_training.ipynb        # Gemma 270m benchmarking
 ├── templates/
-│   └── home.html          # Main Web Interface
-├── app.py                 # Flask Application Logic
-├── requirements.txt       # Production Dependencies
-├── .gitignore             # Environment and Cache exclusion
-└── README.md              # Project Documentation
+│   └── home.html                        # Web UI
+├── app.py                               # Flask Backend
+├── requirements.txt                     # Dependencies
+└── README.md                            # Documentation
 ```
 
 -----
@@ -92,7 +100,7 @@ We conducted extensive experiments on Kaggle to find the most efficient model fo
 
 -----
 
-## 🌐 Deployment
+## Deployment
 
 This project is configured for **Render**.
 
@@ -101,7 +109,7 @@ This project is configured for **Render**.
 
 -----
 
-## 🤝 Acknowledgments
+## Acknowledgments
 
   - **Bangladesh Pratidin** for the data source.
   - **Kaggle** for providing the compute resources for training and labeling.
