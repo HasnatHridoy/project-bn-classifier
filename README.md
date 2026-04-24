@@ -81,7 +81,7 @@ We conducted extensive experiments on Kaggle to find the most efficient model fo
 
 -----
 
-## 💻 Local Installation
+## Local Installation
 
 1.  **Clone the repository:**
 
