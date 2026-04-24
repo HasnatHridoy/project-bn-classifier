@@ -26,13 +26,21 @@ The mission of this project is to develop a lightweight yet highly accurate news
 
 We conducted extensive experiments on Kaggle to find the most efficient model for deployment. While Gemma 270m showed promise, **Bangla BERT** provided the most stable and balanced performance for multi-label classification.
 
+<img width="1188" height="590" alt="download" src="https://github.com/user-attachments/assets/d31bb36f-da42-4686-8890-5c869a5081b6" />
+
+<br>
+
+
+
 | Model | F1-Micro | F1-Macro | Accuracy |
 | :--- | :---: | :---: | :---: |
 | **Bangla BERT** | 0.814 | 0.631 | 0.361 |
 | **Bangla T5** | **0.861** | **0.716** | **0.443** |
 | **Gemma 3 270m** | 0.763 | 0.612 | 0.417 |
 
-*Note: - Although Bangla T5 led in metrics, Bangla BERT was selected for the current deployment phase due to its optimized inference speed for the news classifier architecture. -All fine tuned models are available on Hugging Face.*
+*Note:* 
+- Although Bangla T5 led in metrics, Bangla BERT was selected for the current deployment phase due to its optimized inference speed for the news classifier architecture. 
+- All fine tuned models are available on Hugging Face.
 
 
 -----
@@ -47,24 +55,27 @@ We conducted extensive experiments on Kaggle to find the most efficient model fo
 4.  **Training:** Fine-tuned models on the synthetically labeled dataset using Kaggle's GPU environment.
 5.  **Deployment:** Integrated the best-performing weights into a Hugging Face Space, served through a Flask Web UI.
 
+*Note: All notebooks are available in the notebooks folder of the repo.*
+
 -----
 
 ## Project Structure
 
 ```text
 ├── notebooks/
-│   ├── 01_link_scraper.ipynb            # Discovering article URLs
-│   ├── 02_news_scraping.ipynb           # Extracting full text from links
-│   ├── 03_data_cleaning.ipynb           # Preprocessing & noise removal
-│   ├── 04_dataset_creation.ipynb        # Finalizing the 47k article pool
-│   ├── 05_data_annotation_gemma.ipynb   # Synthetic labeling with Gemma 3 27B
-│   ├── 06_bert_model_training.ipynb     # Bangla BERT training (deployed)
-│   ├── 07_bangla_t5_training.ipynb      # T5 benchmarking
-│   └── 08_gemma_3_training.ipynb        # Gemma 270m benchmarking
+│   ├── link-scraper-part-1.ipynb          # Article URL discovery
+│   ├── news-scraping-part-1.ipynb        # Content extraction from Bangladesh Pratidin
+│   ├── data-cleaning-part-2.ipynb        # Preprocessing and text normalization
+│   ├── dataset-creation.ipynb            # Final 47k article compilation
+│   ├── data-annot-part-1.ipynb           # Synthetic labeling via Gemma 3 27B
+│   ├── bert_model_training.ipynb         # Bangla BERT training (deployed)
+│   ├── bangla_t5_model_training.ipynb    # T5 benchmarking
+│   └── gemma_3_model_training.ipynb      # Gemma 270m benchmarking
 ├── templates/
-│   └── home.html                        # Web UI
-├── app.py                               # Flask Backend
-├── requirements.txt                     # Dependencies
+│   └── home.html                        # Main Web Interface
+├── app.py                               # Flask Application Logic
+├── LICENSE                              # Project License
+├── requirements.txt                     # Production Dependencies
 └── README.md                            # Documentation
 ```
 
@@ -75,8 +86,8 @@ We conducted extensive experiments on Kaggle to find the most efficient model fo
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/YourUsername/BNMLNC.git
-    cd BNMLNC
+    git clone [https://github.com/YourUsername/BNMLNC](https://github.com/HasnatHridoy/project-bn-classifier.git
+    cd project-bn-classifier
     ```
 
 2.  **Create a Virtual Environment:**
@@ -109,12 +120,16 @@ This project is configured for **Render**.
 
 -----
 
-## Acknowledgments
+## Limitation 
 
-  - **Bangladesh Pratidin** for the data source.
-  - **Kaggle** for providing the compute resources for training and labeling.
-  - **Hugging Face** and **Google (Gemma)** for the model architectures.
+The currently deployed model has a limited context window. Our experiment is ongoing for a better model with a larger context size.
 
 -----
 
-*This project is part of an ongoing effort to improve Bangla NLP tools for edge devices.*
+## Acknowledgment
+
+  - **Bangladesh Pratidin** for the data source.
+
+-----
+
+<p align='center'> <i>Contributors are warmly welcome to contribute to this project. </i> </p>
