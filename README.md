@@ -15,7 +15,7 @@ The mission of this project is to develop a lightweight yet highly accurate news
 
 ### Key Highlights:
 
-  - **Large Scale Data:** Scraped **47,000+** news articles from *Bangladesh Pratidin*.
+  - **The Dataset:** Scraped **47,000+** news articles from *Bangladesh Pratidin*.
   - **Synthetic Labeling:** Leveraged **Gemma 3 27B** to assign and re-evaluate labels across a taxonomy of 45 categories.
   - **Model Benchmarking:** Comparative study between **Bangla BERT**, **Bangla T5**, and **Gemma 270m**.
   - **Production Ready:** Deployed via **Flask** on **Render**, utilizing the **Hugging Face Inference API** for the backend.
