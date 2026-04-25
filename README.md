@@ -1,5 +1,8 @@
 <img width="1792" height="592" alt="image" src="https://github.com/user-attachments/assets/faffa46c-6028-44b5-b46f-59ad52698e07" />
 
+<br>
+
+<br>
 
 An experiment to find the best model for multi-label news classifier designed to categorize Bangla news articles into various distinct labels. This project utilizes a  synthetic labeling pipeline and benchmarks multiple transformer architectures to achieve high-performance inference.
 
