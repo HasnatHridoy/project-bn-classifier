@@ -12,7 +12,7 @@ client = Client("hasnatz/bangla_multilable_news_classifier")
 def index():
     return render_template('home.html')
 
-@app.route('/api/predict', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict(): #prediction
     try:
         user_data = request.json
