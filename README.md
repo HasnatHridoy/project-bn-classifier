@@ -16,8 +16,8 @@ The mission of this project is to develop a lightweight yet highly accurate news
 
   - **The Dataset:** Scraped **47,000+** news articles from *Bangladesh Pratidin*.
   - **Synthetic Labeling:** Leveraged **Gemma 3 27B** to assign and re-evaluate labels across a taxonomy of 45 categories.
-  - **Model Benchmarking:** Comparative study between **Bangla BERT**, **Bangla T5**, and **Gemma 270m**.
-  - **Production Ready:** Deployed via **Flask** on **Render**, utilizing the **Hugging Face Inference API** for the backend.
+  - **Model Benchmarking:** Currently we use 3 model for the comparative study they are: **Bangla BERT**, **Bangla T5**, and **Gemma 270m**. <br> (*More model will be added continuously*)
+  - **Production Ready:** Deployed via **Flask** on **Vercel**, utilizing the **Hugging Face Inference API** for the backend.
 
 -----
 
@@ -78,44 +78,42 @@ We conducted extensive experiments on Kaggle to find the most efficient model fo
 └── README.md                            # Documentation
 ```
 
------
+---
 
 ## Local Installation
 
 1.  **Clone the repository:**
-
     ```bash
-    git clone [https://github.com/YourUsername/BNMLNC](https://github.com/HasnatHridoy/project-bn-classifier.git
+    git clone https://github.com/HasnatHridoy/project-bn-classifier.git
     cd project-bn-classifier
     ```
 
 2.  **Create a Virtual Environment:**
-
     ```bash
     python -m venv .venv
-    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+    # On Windows:
+    .venv\Scripts\activate
+    # On macOS/Linux:
+    source .venv/bin/activate
     ```
 
 3.  **Install Dependencies:**
-
     ```bash
     pip install -r requirements.txt
     ```
 
 4.  **Run the App:**
-
+    Since the project is structured for Vercel deployment, run the app from the root directory:
     ```bash
-    python app.py
+    python api/index.py
     ```
-
+    
 -----
 
 ## Deployment
 
-This project is configured for **Render**.
-
-  - **Build Command:** `pip install -r requirements.txt`
-  - **Start Command:** `gunicorn --timeout 120 app:app`
+Current best model has deployed on Vercel.
+<a href="https://project-bn-classifier-jve3.vercel.app/"> Live Demo </a>
 
 -----
 
@@ -127,7 +125,7 @@ The currently deployed model has a limited context window. Our experiment is ong
 
 ## Acknowledgment
 
-  - **Bangladesh Pratidin** for the data source.
+**Bangladesh Pratidin** for the data source.
 
 -----
 
