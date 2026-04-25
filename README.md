@@ -39,7 +39,7 @@ We conducted extensive experiments on Kaggle to find the most efficient model fo
 
 *Note:* 
 - Although Bangla T5 led in metrics, Bangla BERT was selected for the current deployment phase due to its optimized inference speed for the news classifier architecture. 
-- All fine tuned models are available on Hugging Face.
+- All fine tuned models are available on <a href='https://huggingface.co/collections/hasnatz/bn-multilabel-benchmark-for-bangla-news-classification'>Hugging Face</a>
 
 
 -----
